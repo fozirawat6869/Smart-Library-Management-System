@@ -1,5 +1,5 @@
 # 📚 Smart Library Management System
-
+fhgg
 A full-stack **Smart Library Management System** built using the **MERN Stack (MongoDB, Express.js, React.js, Node.js)** to simplify and automate library operations. The application provides a modern, secure, and user-friendly platform for managing books, members, borrowing, returns, reservations, and overdue fines through a role-based dashboard.
 
 The system supports multiple user roles, including **Admin**, **Librarian**, and **Student**, each with dedicated permissions and features. Users can browse the library catalog, search books using filters such as title, author, category, or ISBN, reserve unavailable books, view borrowing history, and receive notifications for due dates and successful transactions.
