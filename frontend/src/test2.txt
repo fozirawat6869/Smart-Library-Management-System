@@ -6,6 +6,7 @@ taiwind setup krra hu
 
 ok
 
+<<<<<<< HEAD
 side mai kholde chat jese maine whatsap mai bheja h 
 
 kaise kerte h ese 
@@ -61,3 +62,10 @@ mera sqlworkbench kaam ni krra yr ptani kyu
 acha
 
 mongodb se kru ky fir ?
+=======
+
+// Packages install kr liyo mayur frontend mai jbh git hub se pull kreega
+
+npm install lucide-react
+npm i react-router-dom
+>>>>>>> 9c56dd6a77bf00f18fbcc9d79222e3dfd947bd17
