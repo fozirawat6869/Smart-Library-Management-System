@@ -1,5 +1,6 @@
 
 import './App.css'
+import Footer from './components/Footer/Footer'
 import Navbar from './components/Navbar/Navbar'
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
           Welcome to your smart digital library.
         </p>
       </div>
+
+      <Footer />
     </>
   )
 }
