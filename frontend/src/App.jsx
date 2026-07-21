@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    mayur rawat 
+  <div className="bg-blue-500 text-white p-4">  mayur rawat </div>
       </>
   )
 }
