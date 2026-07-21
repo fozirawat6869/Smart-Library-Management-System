@@ -1,20 +1,24 @@
-import mongoose from "mysql2";
+import mysql2 from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
 
 const connectDB=mysql2.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 
-connectDB.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.message);
-    } else {
-        console.log('Connected to the database');
-    }
+
+connectDB.connect(err => {
+  if (err) {
+    console.log("❌ MySQL Connection Failed!", err);
+  } else {
+    console.log(`✅ MySQL Connected on port ${process.env.DB_PORT}`);
+  }
 });
 
 
