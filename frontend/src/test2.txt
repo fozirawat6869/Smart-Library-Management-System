@@ -10,3 +10,4 @@ ok
 // Packages install kr liyo mayur frontend mai jbh git hub se pull kreega
 
 npm install lucide-react
+npm i react-router-dom

@@ -1,26 +1,21 @@
-
 import './App.css'
-import Footer from './components/Footer/Footer'
-import Navbar from './components/Navbar/Navbar'
+import {Routes, Route} from 'react-router-dom'
+
+import Home from './pages/Home'
+
 
 function App() {
 
-
   return (
-    <>
-      <Navbar />
-       <div className="max-w-7xl mx-auto py-20 text-center">
-        <h1 className="text-5xl font-bold">
-          📚 Smart Library Management
-        </h1>
+    <Routes>
+      
+      {/*User routes  */}
+      <Route path="/" element={<Home />} />
 
-        <p className="text-gray-600 mt-4">
-          Welcome to your smart digital library.
-        </p>
-      </div>
+      {/* Admin routes */}
+      
 
-      <Footer />
-    </>
+    </Routes>
   )
 }
 
