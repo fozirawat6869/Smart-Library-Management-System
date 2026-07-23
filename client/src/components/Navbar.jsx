@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Search,
   Moon,
@@ -76,10 +77,12 @@ const Navbar = () => {
           </button>
 
           {/* Login */}
-          <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition">
-            <User size={18} />
-            Login / Register
-          </button>
+          <Link to="/login">
+            <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition">
+              <User size={18} />
+              Login / Register
+            </button>
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -122,11 +125,13 @@ const Navbar = () => {
                 </a>
               ))}
             </div>
-
+            
+            <Link to="/login">
             <button className="mt-6 w-full bg-blue-600 text-white py-3 rounded-full flex justify-center items-center gap-2">
               <User size={18} />
               Login / Register
             </button>
+            </Link>
 
           </div>
         </div>
