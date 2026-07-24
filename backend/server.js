@@ -1,22 +1,12 @@
-import app from "./app.js";
-import connectionDB from "./src/config/database.js";
-// import connectDB from "./src/config/database.js";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
-const PORT = process.env.Backend_PORT || 8000;
+import app from './app.js';
+import connectDB from './src/config/db.js';
 
-// connecting database
-// connectDB()
-// .then(() => {
-//   app.listen(PORT, () =>{
-//     console.log(`Server is running on port ${PORT}`);
-//   })
-// })
-// .catch((err) => {
-//   console.log(`Error connecting to the database: ${err.message}`);
-// });
+const PORT = process.env.PORT || 5000;
 
+<<<<<<< HEAD
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 }
@@ -50,3 +40,13 @@ process.on("unhandledRejection",(err)=>{
         process.exit(1)
     })
 })
+=======
+connectDB()
+.then(() => {
+  app.listen(PORT, () => {
+    console.log('Server is running on port ' + PORT);
+  });
+}).catch((err) => {
+  console.log(err);
+});
+>>>>>>> 53d56bf056ca251394f1718efdf6b0e80e2b8064
