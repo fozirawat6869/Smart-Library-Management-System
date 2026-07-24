@@ -33,21 +33,61 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
- 
-    e.preventDefault();
+const [otpSent, setOtpSent] = useState(false);
+const [otp, setOtp] = useState(""); 
+const [verified, setVerified] = useState(false);
+
+const sendOTP = async () => {
+  if (!formData.email) {
+    alert("Please enter your email first.");
+    return;
+  }
+
+  try {
+    const res = await API.post("/auth/send-otp", {
+      email: formData.email,
+    });
+
+    alert(res.data.message);
+    setOtpSent(true);
+  } catch (error) {
+    alert(error.response?.data?.message || "Failed to send OTP");
+  }
+};
+// verify otp
+const verifyOTP = async () => {
+  try {
+    const res = await API.post("/auth/verify-otp", {
+      email: formData.email,
+      otp,
+    });
+
+    alert(res.data.message);
+    setVerified(true);
+
+  } catch (error) {
+    alert(error.response?.data?.message || "OTP Verification Failed");
+  }
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!verified) {
+    alert("Please verify your email first.");
+    return;
+  }
 
   try {
     const res = await API.post("/auth/register", formData);
 
     alert(res.data.message);
+    navigate("/login");
 
-    navigate("/verify-otp", {
-      state: {
-        email: formData.email,
-      }
-    });
-    // Clear form
+    setOtp("");
+    setOtpSent(false);
+    setVerified(false);
+
     setFormData({
       name: "",
       email: "",
@@ -57,11 +97,7 @@ const Register = () => {
     });
 
   } catch (error) {
-    console.log(error);
-
-    alert(
-      error.response?.data?.message || "Registration Failed"
-    );
+    alert(error.response?.data?.message || "Registration Failed");
   }
 };
 
@@ -133,7 +169,6 @@ const Register = () => {
               <label>Email</label>
 
               <div className="border rounded-lg flex items-center mt-2 px-3">
-
                 <Mail size={18} />
 
                 <input
@@ -145,10 +180,58 @@ const Register = () => {
                   onChange={handleChange}
                   required
                 />
-
               </div>
+          
 
-            </div>
+ {/* Send OTP Button */}
+
+<div className="mt-2">
+  <button
+    type="button"
+    onClick={sendOTP}
+    disabled={verified}
+    className={`px-4 py-2 rounded-lg text-white ${
+      verified
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-green-600 hover:bg-green-700"
+    }`}
+  >
+    {verified ? "Email Verified ✓" : "Send OTP"}
+  </button>
+</div>
+                {/* Otp input */}
+                 {otpSent && (
+                   <div className="mt-4">
+                     <label>Enter OTP</label>
+
+                  <input
+                    type="text"
+                      value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter OTP"
+                    className="border rounded-lg w-full p-3 mt-2"
+                    />
+                    {verified && (
+                    <p className="text-green-600 mt-2 font-medium">
+                    ✓ Email verified successfully
+                    </p>
+                  )}
+                   </div>
+                  )}
+
+{/* Verify OTP Button */}
+{otpSent && !verified && (
+  <div className="mt-3">
+    <button
+      type="button"
+      onClick={verifyOTP}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg w-full"
+    >
+      Verify OTP
+    </button>
+  </div>
+)}
+</div>
 
             <div>
 
@@ -159,7 +242,9 @@ const Register = () => {
                 <Phone size={18} />
 
                 <input
-                  type="text"
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  maxLength={10}
                   name="phone"
                   value={formData.phone}
                   placeholder="Phone Number"
@@ -191,7 +276,7 @@ const Register = () => {
 
             <div>
 
-              <label>Password</label>
+              <label>Password
 
               <div className="border rounded-lg flex items-center mt-2 px-3">
 
@@ -200,10 +285,9 @@ const Register = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Password"
                   value={formData.password}
-                  className="w-full p-3 outline-none"
                   onChange={handleChange}
+                  minLength={6}
                   required
                 />
 
@@ -217,10 +301,19 @@ const Register = () => {
                 </button>
 
               </div>
-
+                 </label>
             </div>
-
-            <button className="bg-blue-700 hover:bg-blue-800 text-white w-full py-3 rounded-lg font-semibold">
+            
+            
+            <button
+              type="submit"
+              disabled={!verified}
+              className={`w-full py-3 rounded-lg ${
+              verified
+              ? "bg-blue-700 hover:bg-blue-800 text-white"
+              : "bg-gray-400 cursor-not-allowed text-white"
+              }`}
+              >
               Create Account
             </button>
 
