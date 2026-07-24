@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import Home from './pages/Home';
 import PrivateRoute from './components/PrivateRoute';
 import VerifyOTP from './pages/VerifyOtp';
+import Books from './pages/Books';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Home />
           </PrivateRoute>
         }/>
+        <Route path="/books" element={<Books/>} />
 
       </Routes>
     </BrowserRouter>

@@ -56,13 +56,13 @@ const Login = () => {
 
         <div className="hidden md:flex flex-col justify-center items-center bg-indigo-700 text-white p-10">
 
-          <BookOpen size={70} />
+          <BookOpen size={60} />
 
-          <h1 className="text-4xl font-bold mt-5">
+          <h1 className="text-4xl font-bold mt-2">
             Smart Library
           </h1>
 
-          <p className="text-center mt-4 text-indigo-100">
+          <p className="text-center mt-2 text-indigo-100">
             Read. Learn. Grow.
             <br />
             Welcome back to your library.
@@ -71,7 +71,7 @@ const Login = () => {
           <img
             src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=900"
             alt=""
-            className="rounded-xl mt-8"
+            className="rounded-xl mt-4"
           />
 
         </div>
@@ -90,7 +90,7 @@ const Login = () => {
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 mt-8"
+            className="space-y-4 mt-5"
           >
 
             <div>
@@ -139,7 +139,7 @@ const Login = () => {
                     setShowPassword(!showPassword)
                   }
                 >
-                  {showPassword ? <EyeOff /> : <Eye />}
+                  {showPassword ? <EyeOff className="cursor-pointer" /> : <Eye className="cursor-pointer" />}
                 </button>
 
               </div>
@@ -155,14 +155,14 @@ const Login = () => {
 
               <button
                 type="button"
-                className="text-indigo-600"
+                className="text-indigo-600 cursor-pointer"
               >
                 Forgot Password?
               </button>
 
             </div>
 
-            <button className="bg-indigo-700 hover:bg-indigo-800 text-white w-full py-3 rounded-lg font-semibold">
+            <button className="bg-indigo-700 hover:bg-indigo-800 text-white w-full py-3 rounded-lg font-semibold cursor-pointer">
               Login
             </button>
 

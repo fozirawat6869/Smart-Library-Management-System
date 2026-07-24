@@ -131,7 +131,7 @@ const handleSubmit = async (e) => {
 
         {/* Right */}
 
-        <div className="p-10">
+        <div className="p-7">
 
           <h2 className="text-3xl font-bold">
             Register
@@ -139,14 +139,14 @@ const handleSubmit = async (e) => {
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 mt-8"
+            className="space-y-1 mt-2"
           >
 
             <div>
 
               <label>Full Name</label>
 
-              <div className="border rounded-lg flex items-center mt-2 px-3">
+              <div className="border rounded-lg flex items-center mt-1 px-2">
 
                 <User size={18} />
 
@@ -155,7 +155,7 @@ const handleSubmit = async (e) => {
                   name="name"
                   placeholder="Full Name"
                   value={formData.name}
-                  className="w-full p-3 outline-none"
+                  className="w-full p-2 outline-none"
                   onChange={handleChange}
                   required
                 />
@@ -168,7 +168,7 @@ const handleSubmit = async (e) => {
 
               <label>Email</label>
 
-              <div className="border rounded-lg flex items-center mt-2 px-3">
+              <div className="border rounded-lg flex items-center mt-1 px-3">
                 <Mail size={18} />
 
                 <input
@@ -176,7 +176,7 @@ const handleSubmit = async (e) => {
                   name="email"
                   placeholder="Email"
                   value={formData.email}
-                  className="w-full p-3 outline-none"
+                  className="w-full p-2 outline-none"
                   onChange={handleChange}
                   required
                 />
@@ -185,12 +185,12 @@ const handleSubmit = async (e) => {
 
  {/* Send OTP Button */}
 
-<div className="mt-2">
+<div className="mt-1">
   <button
     type="button"
     onClick={sendOTP}
     disabled={verified}
-    className={`px-4 py-2 rounded-lg text-white ${
+    className={`px-2 py-1 rounded-lg text-white ${
       verified
         ? "bg-gray-400 cursor-not-allowed"
         : "bg-green-600 hover:bg-green-700"
@@ -201,7 +201,7 @@ const handleSubmit = async (e) => {
 </div>
                 {/* Otp input */}
                  {otpSent && (
-                   <div className="mt-4">
+                   <div className="mt-1">
                      <label>Enter OTP</label>
 
                   <input
@@ -209,7 +209,7 @@ const handleSubmit = async (e) => {
                       value={otp}
                     onChange={(e) => setOtp(e.target.value)}
                     placeholder="Enter OTP"
-                    className="border rounded-lg w-full p-3 mt-2"
+                    className="border rounded-lg w-full p-2 mt-1"
                     />
                     {verified && (
                     <p className="text-green-600 mt-2 font-medium">
@@ -221,7 +221,7 @@ const handleSubmit = async (e) => {
 
 {/* Verify OTP Button */}
 {otpSent && !verified && (
-  <div className="mt-3">
+  <div className="mt-1">
     <button
       type="button"
       onClick={verifyOTP}
@@ -237,7 +237,7 @@ const handleSubmit = async (e) => {
 
               <label>Phone</label>
 
-              <div className="border rounded-lg flex items-center mt-2 px-3">
+              <div className="border rounded-lg flex items-center mt-1 px-3">
 
                 <Phone size={18} />
 
@@ -248,7 +248,7 @@ const handleSubmit = async (e) => {
                   name="phone"
                   value={formData.phone}
                   placeholder="Phone Number"
-                  className="w-full p-3 outline-none"
+                  className="w-full p-2 outline-none"
                   onChange={handleChange}
                   required
                 />
@@ -265,7 +265,7 @@ const handleSubmit = async (e) => {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="border rounded-lg w-full p-3 mt-2"
+                className="border rounded-lg w-full p-2 mt-1"
               >
                 <option value="student">Student</option>
                 <option value="librarian">Librarian</option>
@@ -278,7 +278,7 @@ const handleSubmit = async (e) => {
 
               <label>Password
 
-              <div className="border rounded-lg flex items-center mt-2 px-3">
+              <div className="border rounded-lg flex items-center mt-1 px-3">
 
                 <Lock size={18} />
 
@@ -288,7 +288,9 @@ const handleSubmit = async (e) => {
                   value={formData.password}
                   onChange={handleChange}
                   minLength={6}
+                  placeholder="Enter your Password"
                   required
+                  className="w-full p-2 outline-none"
                 />
 
                 <button
@@ -308,7 +310,7 @@ const handleSubmit = async (e) => {
             <button
               type="submit"
               disabled={!verified}
-              className={`w-full py-3 rounded-lg ${
+              className={`w-full py-3 pt-2 rounded-lg ${
               verified
               ? "bg-blue-700 hover:bg-blue-800 text-white"
               : "bg-gray-400 cursor-not-allowed text-white"
@@ -319,7 +321,7 @@ const handleSubmit = async (e) => {
 
           </form>
 
-          <p className="text-center mt-6">
+          <p className="text-center mt-5">
             Already have an account?{" "}
             <Link
               to="/login"
