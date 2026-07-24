@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import API from "../api/api";
+import { useNavigate } from "react-router-dom"; 
 import { Link } from "react-router-dom";
 import {
   User,
@@ -11,14 +13,17 @@ import {
 } from "lucide-react";
 
 const Register = () => {
+
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
-    role: "Student",
+    role: "student",
   });
 
   const handleChange = (e) => {
@@ -28,13 +33,37 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+ 
     e.preventDefault();
 
-    console.log(formData);
+  try {
+    const res = await API.post("/auth/register", formData);
 
-    // axios.post("/api/register", formData)
-  };
+    alert(res.data.message);
+
+    navigate("/verify-otp", {
+      state: {
+        email: formData.email,
+      }
+    });
+    // Clear form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      role: "student",
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message || "Registration Failed"
+    );
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-900 via-blue-800 to-cyan-700 flex justify-center items-center p-5">
@@ -87,8 +116,9 @@ const Register = () => {
 
                 <input
                   type="text"
-                  name="fullName"
+                  name="name"
                   placeholder="Full Name"
+                  value={formData.name}
                   className="w-full p-3 outline-none"
                   onChange={handleChange}
                   required
@@ -110,6 +140,7 @@ const Register = () => {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={formData.email}
                   className="w-full p-3 outline-none"
                   onChange={handleChange}
                   required
@@ -130,6 +161,7 @@ const Register = () => {
                 <input
                   type="text"
                   name="phone"
+                  value={formData.phone}
                   placeholder="Phone Number"
                   className="w-full p-3 outline-none"
                   onChange={handleChange}
@@ -146,11 +178,13 @@ const Register = () => {
 
               <select
                 name="role"
+                value={formData.role}
                 onChange={handleChange}
                 className="border rounded-lg w-full p-3 mt-2"
               >
-                <option>Student</option>
-                <option>Librarian</option>
+                <option value="student">Student</option>
+                <option value="librarian">Librarian</option>
+                <option value="admin">Admin</option>
               </select>
 
             </div>
@@ -167,6 +201,7 @@ const Register = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Password"
+                  value={formData.password}
                   className="w-full p-3 outline-none"
                   onChange={handleChange}
                   required

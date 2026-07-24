@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import API from "../api/api";
 import { BookOpen, Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -17,9 +21,28 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    console.log(formData);
+
+    try{
+      const response = await API.post("/auth/login", formData);
+      console.log(response.data);
+
+      // save token
+      localStorage.setItem("token", response.data.token);
+      // save user
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      alert('Login successful');
+
+      navigate("/home");
+
+    }catch(error){
+      alert(
+        error.response?.data?.message || "Login Failed"
+      )
+    }
 
     // axios.post("/api/login", formData)
   };
