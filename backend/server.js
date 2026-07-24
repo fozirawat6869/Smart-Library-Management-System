@@ -22,7 +22,25 @@ app.listen(PORT, () => {
 }
 );
 
-
+// Server is running
+//        │
+//        ▼
+// A Promise fails
+//        │
+//        ▼
+// Nobody catches the error
+//        │
+//        ▼
+// process.on("unhandledRejection") runs
+//        │
+//        ▼
+// Print the error
+//        │
+//        ▼
+// Stop accepting new requests
+//        │
+//        ▼
+// Exit the application
 
 process.on("unhandledRejection",(err)=>{
     console.log(err.message)
