@@ -13,14 +13,14 @@ import {
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = [
-    "Home",
-    "Books",
-    "Categories",
-    "New Arrivals",
-    "My Books",
-    "Contact",
-  ];
+ const navLinks = [
+  { name: "Home", path: "/home" },
+  { name: "Books", path: "/books" },
+  { name: "Categories", path: "/categories" },
+  { name: "New Arrivals", path: "/new-arrivals" },
+  { name: "My Books", path: "/my-books" },
+  { name: "Contact", path: "/contact" },
+];
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
@@ -37,13 +37,13 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-7">
           {navLinks.map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="text-gray-700 font-medium hover:text-blue-600 transition"
-            >
-              {item}
-            </a>
+          <Link
+            key={item.path}
+            to={item.path}
+            className="text-gray-700 font-medium hover:text-blue-600 transition"
+          >
+          {item.name}
+          </Link>
           ))}
         </div>
 
@@ -116,15 +116,16 @@ const Navbar = () => {
 
             <div className="flex flex-col gap-4">
               {navLinks.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="font-medium hover:text-blue-600"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
+              <Link
+              key={item.path}
+              to={item.path}
+              onClick={() => setMenuOpen(false)}
+              className="font-medium hover:text-blue-600"
+               >
+              {item.name}
+            </Link>
+           ))}
+        </div>
             
             <Link to="/login">
             <button className="mt-6 w-full bg-blue-600 text-white py-3 rounded-full flex justify-center items-center gap-2">

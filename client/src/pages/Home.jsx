@@ -1,19 +1,11 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Hero from '../components/Home pages/hero'
 const Home = () => {
   return (
     <>
-      <Navbar />
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      <h1>Hello </h1>
-      
+      <Hero />
       <Footer />
       
     </>
