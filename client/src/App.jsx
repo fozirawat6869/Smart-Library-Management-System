@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* User routes */}
-        <Route path="/" element={<Navigate to ="Login/"/>} />
+        <Route path="/" element={<Navigate to ="/login"/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />

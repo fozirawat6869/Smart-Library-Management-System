@@ -1,51 +1,83 @@
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 import generateToken from "../utils/generateToken.js";
 import generateOTP from "../utils/generateOTP.js";
 import sendOTP from "../utils/sendEmail.js";
+import OTP from "../models/otp.model.js";
 
+export const sendOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const otp = generateOTP();
+
+    await OTP.findOneAndDelete({ email });
+
+    await OTP.create({
+      email,
+      otp,
+      otpExpiry: Date.now() + 5 * 60 * 1000,
+    });
+
+    await sendOTP(email, otp);
+
+    res.status(200).json({
+      success: true,
+      message: "OTP sent successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // register 
 
-export const registerUser = async(req, res) => {
-try{
-    const {name, email,phone, password, role} = req.body;
+export const registerUser = async (req, res) => {
+  try {
+    const { name, email, phone, password, role } = req.body;
 
-  // check if user exists
-  const exists = await User.findOne({email});
+    const exists = await User.findOne({ email });
 
-  if(exists){
-    return res.status(400).json({message: "User already exists"});
-  }
+    if (exists) {
+      return res.status(400).json({
+        success: false,
+        message: "User already exists",
+      });
+    }
+    const otpData = await OTP.findOne({ email });
 
-  const otp = generateOTP();
-  // if user not exists then create
-  const user = await User
-  .create({
-    name, 
-    email,
-    phone, 
-    password, 
-    otp,
-    otpExpiry: Date.now() + 5*60*1000,
-    isVerified: false,
-    role
-  });
-
-  await sendOTP(email, otp);
-
-  res.status(201).json({
-    success: true,
-    message: "OTP sent to your email",
-    email: user.email,
-  })
-}catch(error){
-  res.status(500).json({
+  if (!otpData || !otpData.verified) {
+  return res.status(400).json({
     success: false,
-    message: error.message,
-  })
+    message: "Please verify your email first",
+  });
 }
-}
+
+    await User.create({
+      name,
+      email,
+      phone,
+      password,
+      role,
+      isVerified: true,
+    });
+
+    await OTP.findOneAndDelete({ email });
+
+    res.status(201).json({
+      success: true,
+      message: "Registration successful",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // Login 
 export const loginUser = async(req, res) => {
@@ -98,56 +130,48 @@ export const loginUser = async(req, res) => {
 }
 }
 
-export const verifyOTP = async(req, res) => {
-  try{
-    const {email, otp} = req.body;
+export const verifyOTP = async (req, res) => {
+  try {
 
-    const user = await User.findOne({email});
+    const { email, otp } = req.body;
 
-    if(!user){
+    const data = await OTP.findOne({ email });
+
+    if (!data) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
-      })
+        message: "OTP not found",
+      });
     }
 
-    if(user.isVerified){
-      return res.status(400).json({
-        success: false,
-        message: "User already verified",
-      })
-    }
-
-    if(user.otp !== otp){
+    if (String(data.otp) !== String(otp)) {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP",
-      })
+      });
     }
 
-    if(user.otpExpiry < Date.now()){
+    if (data.otpExpiry < Date.now()) {
       return res.status(400).json({
         success: false,
         message: "OTP expired",
-      })
+      });
     }
+    data.verified = true;
+    await data.save();
 
-    user.isVerified = true;
-    user.otp = undefined;
-    user.otpExpiry = undefined;
+    return res.status(200).json({
+    success: true,
+    message: "OTP verified successfully",
+  });
 
-    await user.save();
+  } catch (error) {
 
-    res.status(200).json({
-      success: true,
-      message: "User verified successfully",
-    })
-
-  }catch(error){
     res.status(500).json({
       success: false,
       message: error.message,
-    })
+    });
+
   }
-}
+};
 
