@@ -33,7 +33,6 @@ export const sendOtp = async (req, res) => {
 };
 
 // register 
-
 export const registerUser = async (req, res) => {
   try {
     const { name, email, phone, password, role } = req.body;
@@ -53,7 +52,7 @@ export const registerUser = async (req, res) => {
     success: false,
     message: "Please verify your email first",
   });
-}
+  }
 
     await User.create({
       name,

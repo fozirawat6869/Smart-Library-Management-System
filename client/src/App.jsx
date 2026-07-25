@@ -30,6 +30,8 @@ function App() {
         }/>
 
         <Route path="/books" element={<Books/>} />
+        <Route path="/books/:categoryId" element={<Books/>} />
+
         <Route path="/categories" element={<Category />} />
 
       </Routes>
