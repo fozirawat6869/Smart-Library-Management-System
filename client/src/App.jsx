@@ -7,11 +7,14 @@ import Home from './pages/Home';
 import PrivateRoute from './components/PrivateRoute';
 import VerifyOTP from './pages/VerifyOtp';
 import Books from './pages/Books';
+import Category from './pages/Category';
+import Navbar from './components/Navbar';
 
 function App() {
 
   return (
     <BrowserRouter>
+     <Navbar />
       <Routes>
         {/* User routes */}
         <Route path="/" element={<Navigate to ="/login"/>} />
@@ -26,7 +29,7 @@ function App() {
           </PrivateRoute>
         }/>
         <Route path="/books" element={<Books/>} />
-
+        <Route path="/categories" element={<Category />} />
       </Routes>
     </BrowserRouter>
   )

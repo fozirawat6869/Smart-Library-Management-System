@@ -1,56 +1,8 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 
-const books = [
-  {
-    id: 1,
-    title: "Clean Code",
-    author: "Robert C. Martin",
-    category: "Programming",
-    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500",
-    available: true,
-  },
-  {
-    id: 2,
-    title: "Atomic Habits",
-    author: "James Clear",
-    category: "Self Help",
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500",
-    available: false,
-  },
-  {
-    id: 3,
-    title: "Deep Work",
-    author: "Cal Newport",
-    category: "Productivity",
-    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=500",
-    available: true,
-  },
-  {
-    id: 4,
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    category: "Finance",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=500",
-    available: true,
-  },
-  {
-    id: 5,
-    title: "The Alchemist",
-    author: "Paulo Coelho",
-    category: "Novel",
-    image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=500",
-    available: false,
-  },
-  {
-    id: 6,
-    title: "Think Like a Monk",
-    author: "Jay Shetty",
-    category: "Self Help",
-    image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=500",
-    available: true,
-  },
-];
+import {getBooks,  getCategories} from "../api/bookApi";
+
 
 const categories = [
   "All",
@@ -65,13 +17,41 @@ const Books = () => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  const [books, setBooks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  fetchData();
+}, []);
+
+const fetchData = async () => {
+  try {
+    const [bookRes, categoryRes] = await Promise.all([
+      getBooks(),
+      getCategories(),
+    ]);
+
+    setBooks(bookRes.data.books);
+
+    setCategories([
+      { _id: "all", name: "All" },
+      ...categoryRes.data.categories,
+    ]);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
   const filteredBooks = books.filter((book) => {
     const matchSearch =
       book.title.toLowerCase().includes(search.toLowerCase()) ||
       book.author.toLowerCase().includes(search.toLowerCase());
 
     const matchCategory =
-      selectedCategory === "All" || book.category === selectedCategory;
+      selectedCategory === "All" || book.category?.name === selectedCategory;
 
     return matchSearch && matchCategory;
   });
@@ -104,28 +84,29 @@ const Books = () => {
           />
         </div>
 
-        {/* Categories */}
+ {/* Categories */}
+
         <div className="flex gap-3 overflow-x-auto pb-3 mb-8 scrollbar-hide">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`whitespace-nowrap px-5 py-2 rounded-full transition ${
-                selectedCategory === cat
-                  ? "bg-blue-600 text-white"
-                  : "bg-white border hover:bg-blue-50"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {categories.map((cat) => (
+          <button
+            key={cat._id}
+            onClick={() => setSelectedCategory(cat.name)}
+            className={`px-5 py-2 rounded-full ${
+              selectedCategory === cat.name
+                ? "bg-blue-600 text-white"
+                : "bg-white border"
+            }`}
+          >
+            {cat.name}
+          </button>
+        ))}
         </div>
 
         {/* Books Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBooks.map((book) => (
             <div
-              key={book.id}
+              key={book._id}
               className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition duration-300"
             >
               <img
@@ -136,7 +117,7 @@ const Books = () => {
 
               <div className="p-5">
                 <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                  {book.category}
+                  {book.category?.name}
                 </span>
 
                 <h2 className="font-bold text-xl mt-3">
@@ -146,6 +127,12 @@ const Books = () => {
                 <p className="text-gray-500 mt-1">
                   {book.author}
                 </p>
+                <div>
+                  {`Quantity: ${book.quantity}`}
+                  </div>
+                <div>
+                  {`isbn:${book.isbn}`}
+                  </div>
 
                 <div className="flex items-center justify-between mt-5">
                   {book.available ? (
