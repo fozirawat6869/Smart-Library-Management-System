@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 import generateOTP from "../utils/generateOTP.js";
-import sendOTP from "../utils/sendEmail.js";
+import { sendOTP } from "../utils/sendOtp.js";
 import OTP from "../models/otp.model.js";
 
 export const sendOtp = async (req, res) => {

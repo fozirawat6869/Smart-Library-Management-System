@@ -28,14 +28,10 @@ function App() {
             <Home />
           </PrivateRoute>
         }/>
-<<<<<<< HEAD
 
-        {/*  */}
-
-=======
         <Route path="/books" element={<Books/>} />
         <Route path="/categories" element={<Category />} />
->>>>>>> dc2522e754495b207449e91ed90df4d890923d7f
+
       </Routes>
     </BrowserRouter>
   )
