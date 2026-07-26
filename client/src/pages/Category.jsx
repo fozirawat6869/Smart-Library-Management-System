@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
+
+  const navigate = useNavigate();
+
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -25,6 +29,8 @@ const Category = () => {
   );
 
   return (
+    
+
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-7xl mx-auto">
 
@@ -61,13 +67,15 @@ const Category = () => {
 
         {/* Category Grid */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => (
               <div
                 key={category._id}
-                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 flex flex-col items-center text-center hover:-translate-y-2"
+                onClick={() => navigate(`/books/${category._id}`)}
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 flex flex-col items-center text-center hover:-translate-y-2 cursor-pointer"
               >
                 <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-4">
                   <BookOpen className="text-blue-600" size={30} />

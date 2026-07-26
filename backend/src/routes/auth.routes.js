@@ -1,4 +1,5 @@
 import express from 'express';
+import { loginLimiter } from '../middlewares/rateLimiter.js';
 
 import{
   sendOtp,
@@ -11,7 +12,7 @@ const router = express.Router();
 
 router.post('/send-otp', sendOtp);
 router.post('/register', registerUser);
-router.post('/login', loginUser);
+router.post('/login', loginLimiter, loginUser);
 router.post('/verify-otp', verifyOTP);
 
 export default router;

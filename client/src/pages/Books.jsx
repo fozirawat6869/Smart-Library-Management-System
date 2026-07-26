@@ -2,7 +2,7 @@ import {useEffect, useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 
 import {getBooks,  getCategories} from "../api/bookApi";
-
+import { useParams } from "react-router-dom";
 
 const categories = [
   "All",
@@ -45,16 +45,23 @@ const fetchData = async () => {
   }
 };
 
-  const filteredBooks = books.filter((book) => {
+const filteredBooks = books.filter((book) => {
+
+  const { categoryId } = useParams();
+
     const matchSearch =
       book.title.toLowerCase().includes(search.toLowerCase()) ||
       book.author.toLowerCase().includes(search.toLowerCase());
 
-    const matchCategory =
-      selectedCategory === "All" || book.category?.name === selectedCategory;
+    const matchCategory = categoryId
+    ? book.category?._id === categoryId
+    : selectedCategory === "All" ||
+    book.category?.name === selectedCategory;
 
     return matchSearch && matchCategory;
   });
+
+  
 
   return (
     <section className="bg-gray-50 min-h-screen py-10 px-4">
@@ -112,7 +119,7 @@ const fetchData = async () => {
               <img
                 src={book.image}
                 alt={book.title}
-                className="w-full h-60 object-cover"
+                className="w-full h-20 object-cover"
               />
 
               <div className="p-5">
@@ -124,17 +131,17 @@ const fetchData = async () => {
                   {book.title}
                 </h2>
 
-                <p className="text-gray-500 mt-1">
+                <p className="text-gray-500 font-bold text-xs mt-1">
                   {book.author}
                 </p>
-                <div>
+                <div className="text-black-500 font-bold text-xs mt-1">
                   {`Quantity: ${book.quantity}`}
                   </div>
-                <div>
+                <div className="text-black-500 font-bold text-xs mt-1">
                   {`isbn:${book.isbn}`}
                   </div>
 
-                <div className="flex items-center justify-between mt-5">
+                <div className="flex items-center justify-between mt-2">
                   {book.available ? (
                     <span className="text-green-600 font-semibold">
                       Available
@@ -145,7 +152,7 @@ const fetchData = async () => {
                     </span>
                   )}
 
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-lg">
                     View
                   </button>
                 </div>

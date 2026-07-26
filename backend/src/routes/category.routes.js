@@ -3,9 +3,10 @@
     createCategory
   } from "../controllers/category.controller.js";
 
+
   const router = express.Router();
 
-  router.get('/', getCategories);
+  router.get('/',getCategories);
   router.post('/', createCategory)
 
   export default router;

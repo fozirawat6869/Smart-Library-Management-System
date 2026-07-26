@@ -60,3 +60,22 @@ export const createBooks = async (req, res) => {
       message: error.message });
   }
 }
+
+export const getNewArrivals = async (req, res) => {
+  try {
+    const books = await Book.find()
+      .populate("category")
+      .sort({ createdAt: -1 })
+      .limit(20);
+
+    res.json({
+      success: true,
+      books,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

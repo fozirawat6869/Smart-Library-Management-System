@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 import generateOTP from "../utils/generateOTP.js";
-import sendOTP from "../utils/sendEmail.js";
+import { sendOTP } from "../utils/sendOtp.js";
 import OTP from "../models/otp.model.js";
 
 export const sendOtp = async (req, res) => {
@@ -33,7 +33,6 @@ export const sendOtp = async (req, res) => {
 };
 
 // register 
-
 export const registerUser = async (req, res) => {
   try {
     const { name, email, phone, password, role } = req.body;
@@ -53,7 +52,7 @@ export const registerUser = async (req, res) => {
     success: false,
     message: "Please verify your email first",
   });
-}
+  }
 
     await User.create({
       name,
