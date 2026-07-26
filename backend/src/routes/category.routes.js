@@ -2,11 +2,11 @@
   import { getCategories,
     createCategory
   } from "../controllers/category.controller.js";
-import { adminOnly } from "../middlewares/adminOnly.js";
+
 
   const router = express.Router();
 
-  router.get('/',adminOnly,getCategories);
-  router.post('/',adminOnly, createCategory)
+  router.get('/',getCategories);
+  router.post('/', createCategory)
 
   export default router;

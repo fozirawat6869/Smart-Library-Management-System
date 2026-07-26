@@ -19,7 +19,7 @@ const Navbar = () => {
   { name: "Categories", path: "/categories" },
   { name: "New Arrivals", path: "/new-arrivals" },
   { name: "My Books", path: "/my-books" },
-  { name: "Contact", path: "/contact" },
+  { name: "Borrow Cart", path: "/borrow-cart" },
 ];
 
   return (
@@ -51,7 +51,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-4">
 
           {/* Search */}
-          <div className="relative">
+          {/* <div className="relative">
             <Search
               size={18}
               className="absolute left-3 top-3 text-gray-500"
@@ -62,7 +62,7 @@ const Navbar = () => {
               placeholder="Search Books..."
               className="pl-10 pr-4 py-2 w-64 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </div> */}
 
           {/* Icons */}
           <button className="hover:text-blue-600 transition">

@@ -1,4 +1,5 @@
 import { BookOpen, Search, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -38,15 +39,20 @@ const Hero = () => {
           </div>
 
           {/* Buttons */}
+          
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <Link to="/books"> 
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-semibold flex items-center gap-2 transition">
               Browse Books
               <ArrowRight size={18} />
             </button>
+             </Link>
 
+            <Link to="/learn-more">
             <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-5 py-3 rounded-xl font-semibold transition">
               Learn More
             </button>
+            </Link>
           </div>
 
           {/* Stats */}
