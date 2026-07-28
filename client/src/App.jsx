@@ -34,21 +34,18 @@ function App() {
           </PrivateRoute>
         }/>
 
-<<<<<<< HEAD
+
         {/*  */}
 
-=======
->>>>>>> 206a1b3ee3e63c913bedd70dbcd3f40cf3716f2b
         <Route path="/books" element={<Books/>} />
         <Route path="/books/:categoryId" element={<Books/>} />
 
         <Route path="/categories" element={<Category />} />
-<<<<<<< HEAD
-=======
+
         <Route path="/new-arrivals" element={<NewArrivals />} />
         <Route path="/borrow-cart" element={<PrivateRoute><BorrowCart /></PrivateRoute>} />
         <Route path="/learn-more" element={<PrivateRoute><LearnMore /></PrivateRoute>} />
->>>>>>> 206a1b3ee3e63c913bedd70dbcd3f40cf3716f2b
+
       </Routes>
     </BrowserRouter>
   )

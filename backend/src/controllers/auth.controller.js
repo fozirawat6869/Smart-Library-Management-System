@@ -4,33 +4,99 @@ import generateOTP from "../utils/generateOTP.js";
 import { sendOTP } from "../utils/sendOtp.js";
 import OTP from "../models/otp.model.js";
 
+
+import dotenv from "dotenv";
+import axios from "axios";
+
+dotenv.config();
+
+
 export const sendOtp = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { number } = req.body;
 
-    const otp = generateOTP();
+    if (!number) {
+      return res.status(400).json({
+        success: false,
+        message: "Mobile number is required",
+      });
+    }
 
-    await OTP.findOneAndDelete({ email });
+    console.log("Number from request body:", number);
+    console.log("Inside sendOtp API");
+    console.log("2Factor API Key:", process.env.TwoFactorKey);
 
-    await OTP.create({
-      email,
-      otp,
-      otpExpiry: Date.now() + 5 * 60 * 1000,
-    });
+    const url = `https://2factor.in/API/V1/${process.env.TwoFactorKey}/SMS/+91${number}/AUTOGEN/OTP1`;
+//  const url=`https://2factor.in/API/V1/b2af6789-d7a9-11f0-a6b2-0200cd936042/SMS/918755306869/AUTOGEN/OTP1 `
+    console.log("Request URL:", url);
 
-    await sendOTP(email, otp);
+    const response = await axios.get(url);
+    
 
-    res.status(200).json({
+    console.log("2Factor Response:", response.data);
+
+    return res.status(200).json({
       success: true,
       message: "OTP sent successfully",
+      data: response.data,
     });
+
   } catch (error) {
-    res.status(500).json({
+    console.log("========== ERROR ==========");
+    console.log("Code:", error.code);
+    console.log("Message:", error.message);
+
+    if (error.response) {
+      console.log("Status:", error.response.status);
+      console.log("Data:", error.response.data);
+    }
+
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
+
+// export const sendOtp = async (req, res) => {
+
+
+
+  // gopi code  
+
+  // try {
+  //   const { email } = req.body;
+
+  //   const otp = generateOTP();
+  //   await OTP.findOneAndDelete({ email });
+
+
+
+  //   await OTP.create({
+  //     email,
+  //     otp,
+  //     otpExpiry: Date.now() + 5 * 60 * 1000,
+  //   });
+
+  
+  //   console.log(`Sending OTP ${otp} to email: ${email}`); // Log the OTP and email for debugging
+
+  //   await sendOTP(email, otp);
+
+  //   res.status(200).json({
+  //     success: true,
+  //     message: "OTP sent successfully",
+  //   });
+  // } catch (error) {
+  //   res.status(500).json({
+  //     success: false,
+  //     message: error.message,
+  //   });
+  // }
+
+
+
+// };
 
 // register 
 export const registerUser = async (req, res) => {
