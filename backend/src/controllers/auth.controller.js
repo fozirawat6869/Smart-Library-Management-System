@@ -8,7 +8,6 @@ import axios from "axios";
 
 dotenv.config();
 
-
 export const sendOtpController = async (req, res) => {
   try {
     const { phone } = req.body;
@@ -18,6 +17,15 @@ export const sendOtpController = async (req, res) => {
         success: false,
         message: "Phone number is required",
       });
+    }
+
+    const exists = await User.findOne({phone});
+
+    if(exists){
+      return res.status(400).json({
+        success: false,
+        message: "Phone no. already exists",
+      })
     }
 
     const result = await sendOTP(phone);
@@ -34,7 +42,6 @@ export const sendOtpController = async (req, res) => {
     });
   }
 };
-
 
 export const verifyOtpController = async (req, res) => {
   try {
@@ -60,54 +67,6 @@ export const verifyOtpController = async (req, res) => {
     });
   }
 };
-
-// export const sendOtp = async (req, res) => {
-//   try {
-//     const { phone } = req.body;
-
-//     if (!phone) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "Phone no. is required",
-//       });
-//     }
-
-//     console.log("Number from request body:", number);
-//     console.log("Inside sendOtp API");
-//     console.log("2Factor API Key:", process.env.TwoFactorKey);
-
-//     const url = `https://2factor.in/API/V1/${process.env.TwoFactorKey}/SMS/+91${number}/AUTOGEN/OTP1`;
-// //  const url=`https://2factor.in/API/V1/b2af6789-d7a9-11f0-a6b2-0200cd936042/SMS/918755306869/AUTOGEN/OTP1 `
-//     console.log("Request URL:", url);
-
-//     const response = await axios.get(url);
-    
-
-//     console.log("2Factor Response:", response.data);
-
-//     return res.status(200).json({
-//       success: true,
-//       message: "OTP sent successfully",
-//       data: response.data,
-//     });
-
-//   } catch (error) {
-//     console.log("========== ERROR ==========");
-//     console.log("Code:", error.code);
-//     console.log("Message:", error.message);
-
-//     if (error.response) {
-//       console.log("Status:", error.response.status);
-//       console.log("Data:", error.response.data);
-//     }
-
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
 
 // register 
 export const registerUser = async (req, res) => {
@@ -160,10 +119,15 @@ export const registerUser = async (req, res) => {
 // Login 
 export const loginUser = async(req, res) => {
   try{
-    const {email, password} = req.body;
+    const {phone, password, role } = req.body;
 
+    if (!/^\d{10}$/.test(phone)) {
+    return res.status(400).json({
+    message: "Please enter a valid 10-digit mobile number.",
+  });
+}
     // find the user from database
-    const user = await User.findOne({email});
+    const user = await User.findOne({phone});
 
     if(!user){
       return res.status(404).json({
@@ -172,11 +136,18 @@ export const loginUser = async(req, res) => {
       })
     }
 
+    if(user.role !== role){
+      return res.status(401).json({
+        success: false,
+        message: `This account is not a ${role} account`,
+      })
+    }
+
     // verify the user otp
     if(!user.isVerified){
       return res.status(401).json({
         success: false,
-        message: "Please verify your email first",
+        message: "Please verify your phone first",
       })
     }
 
