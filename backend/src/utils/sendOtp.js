@@ -1,15 +1,17 @@
-import { Resend } from "resend";
+import axios from "axios";
 
-import dotenv from "dotenv";
-dotenv.config();
+export const sendOTP = async (phone) => {
+  try {
+    const apiKey = process.env.TWO_FACTOR_API_KEY;
 
-console.log("Resend API Key:", process.env.RESEND_API_KEY); // Log the API key to verify it's being read correctly
+    const response = await axios.get(
+      `https://2factor.in/API/V1/${apiKey}/SMS/${phone}/AUTOGEN`
+    );
 
-
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export const sendOTP = async (email, otp) => {
- 
+    return response.data;
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+    throw new Error("Failed to send OTP");
+  }
 };
 
