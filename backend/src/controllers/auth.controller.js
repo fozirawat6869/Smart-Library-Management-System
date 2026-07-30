@@ -31,7 +31,6 @@ export const sendOtp = async (req, res) => {
     console.log("Request URL:", url);
 
     const response = await axios.get(url);
-    
 
     console.log("2Factor Response:", response.data);
 
@@ -58,45 +57,7 @@ export const sendOtp = async (req, res) => {
   }
 };
 
-// export const sendOtp = async (req, res) => {
 
-
-
-  // gopi code  
-
-  // try {
-  //   const { email } = req.body;
-
-  //   const otp = generateOTP();
-  //   await OTP.findOneAndDelete({ email });
-
-
-
-  //   await OTP.create({
-  //     email,
-  //     otp,
-  //     otpExpiry: Date.now() + 5 * 60 * 1000,
-  //   });
-
-  
-  //   console.log(`Sending OTP ${otp} to email: ${email}`); // Log the OTP and email for debugging
-
-  //   await sendOTP(email, otp);
-
-  //   res.status(200).json({
-  //     success: true,
-  //     message: "OTP sent successfully",
-  //   });
-  // } catch (error) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: error.message,
-  //   });
-  // }
-
-
-
-// };
 
 // register 
 export const registerUser = async (req, res) => {
