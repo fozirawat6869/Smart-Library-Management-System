@@ -12,6 +12,7 @@ import {
   BookOpen,
 } from "lucide-react";
 
+
 const Register = () => {
 
   const navigate = useNavigate();
@@ -36,37 +37,41 @@ const Register = () => {
 const [otpSent, setOtpSent] = useState(false);
 const [otp, setOtp] = useState(""); 
 const [verified, setVerified] = useState(false);
+const [sessionId, setSessionId] = useState("");
 
 const sendOTP = async () => {
-  if (!formData.email) {
-    alert("Please enter your email first.");
-    return;
+  if (!formData.phone) {
+    return alert("Enter phone number");
   }
 
   try {
     const res = await API.post("/auth/send-otp", {
-      email: formData.email,
+      phone: formData.phone,
     });
 
-    alert(res.data.message);
+    setSessionId(res.data.sessionId);
     setOtpSent(true);
+
+    alert("OTP Sent Successfully");
   } catch (error) {
     alert(error.response?.data?.message || "Failed to send OTP");
   }
 };
+
 // verify otp
 const verifyOTP = async () => {
   try {
     const res = await API.post("/auth/verify-otp", {
-      email: formData.email,
+      sessionId,
       otp,
     });
 
-    alert(res.data.message);
-    setVerified(true);
-
+    if (res.data.success) {
+      setVerified(true);
+      alert("Phone Verified Successfully");
+    }
   } catch (error) {
-    alert(error.response?.data?.message || "OTP Verification Failed");
+    alert(error.response?.data?.message || "Invalid OTP");
   }
 };
 
@@ -74,8 +79,8 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!verified) {
-    alert("Please verify your email first.");
-    return;
+  alert("Please verify your phone number first.");
+  return;
   }
 
   try {
@@ -183,41 +188,30 @@ const handleSubmit = async (e) => {
               </div>
           
 
- {/* Send OTP Button */}
 
-<div className="mt-1">
-  <button
-    type="button"
-    onClick={sendOTP}
-    disabled={verified}
-    className={`px-2 py-1 rounded-lg text-white ${
-      verified
-        ? "bg-gray-400 cursor-not-allowed"
-        : "bg-green-600 hover:bg-green-700"
-    }`}
-  >
-    {verified ? "Email Verified ✓" : "Send OTP"}
-  </button>
-</div>
-                {/* Otp input */}
-                 {otpSent && (
-                   <div className="mt-1">
-                     <label>Enter OTP</label>
+{/* Phone Verification */}
 
-                  <input
-                    type="text"
-                      value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="Enter OTP"
-                    className="border rounded-lg w-full p-2 mt-1"
-                    />
-                    {verified && (
-                    <p className="text-green-600 mt-2 font-medium">
-                    ✓ Email verified successfully
-                    </p>
-                  )}
-                   </div>
-                  )}
+{otpSent && (
+  <div className="mt-3">
+    <label>Enter OTP</label>
+
+    <input
+      type="text"
+      value={otp}
+      onChange={(e) => setOtp(e.target.value)}
+      placeholder="Enter 6-digit OTP"
+      className="border rounded-lg w-full p-2 mt-1"
+    />
+
+    
+
+    {verified && (
+      <p className="text-green-600 mt-3 font-semibold">
+        ✓ Phone verified successfully
+      </p>
+    )}
+  </div>
+)}
 
 {/* Verify OTP Button */}
 {otpSent && !verified && (
@@ -254,8 +248,24 @@ const handleSubmit = async (e) => {
                 />
 
               </div>
+              
+<div className="mt-3">
+  <button
+    type="button"
+    onClick={sendOTP}
+    disabled={verified}
+    className={`w-full py-2 rounded-lg text-white ${
+      verified
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-green-600 hover:bg-green-700"
+    }`}
+  >
+    {verified ? "Phone Verified ✓" : "Send OTP"}
+  </button>
+</div>
 
-            </div>
+
+</div>
 
             <div>
 
@@ -288,7 +298,7 @@ const handleSubmit = async (e) => {
                   value={formData.password}
                   onChange={handleChange}
                   minLength={6}
-                  placeholder="Enter your Password"
+                  placeholder="Enter your   Password"
                   required
                   className="w-full p-2 outline-none"
                 />
