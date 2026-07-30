@@ -14,3 +14,7 @@ export const sendOTP = async (phone) => {
     throw new Error("Failed to send OTP");
   }
 };
+
+
+
+
