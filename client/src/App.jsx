@@ -36,15 +36,35 @@ function App() {
           />
         </Route>
 
-        {/*  */}
+        {/*Book page*/}
+        <Route path="/books" 
+        element={
+          <>
+          <Navbar/>
+          <Books/>
+          </>} />
 
-        <Route path="/books" element={<Books/>} />
         <Route path="/books/:categoryId" element={<Books/>} />
 
-        <Route path="/categories" element={<Category />} />
+        <Route path="/categories" element={
+          <>
+          <Navbar/>
+          <Category />
+          </>
+          } />
 
-        <Route path="/new-arrivals" element={<NewArrivals />} />
-        <Route path="/borrow-cart" element={<PrivateRoute><BorrowCart /></PrivateRoute>} />
+        <Route path="/new-arrivals" element={
+          <>
+          <Navbar/>
+          <NewArrivals />
+          </>} />
+
+        <Route path="/borrow-cart" element={
+          <>
+          <Navbar />
+          <BorrowCart />
+          </>} />
+
         <Route path="/learn-more" element={<PrivateRoute><LearnMore /></PrivateRoute>} />
 
       </Routes>

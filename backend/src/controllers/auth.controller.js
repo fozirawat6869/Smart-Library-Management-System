@@ -43,6 +43,7 @@ export const sendOtpController = async (req, res) => {
   }
 };
 
+
 export const verifyOtpController = async (req, res) => {
   try {
     const { sessionId, otp } = req.body;
