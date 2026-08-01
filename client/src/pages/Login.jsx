@@ -38,7 +38,7 @@ const Login = () => {
       alert("Login Successful");
 
       if (loginType === "admin") {
-        navigate("/adminHome");
+        navigate("/admin");
       } else {
         navigate("/home");
       }

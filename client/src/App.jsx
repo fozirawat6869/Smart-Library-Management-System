@@ -11,6 +11,7 @@ import NewArrivals from "./pages/NewArrivals";
 import BorrowCart from "./pages/BorrowCart";
 import LearnMore from "./pages/LearnMore";
 import AdminHome from "./pages/adminPages/AdminHome";
+import AdminNavbar from "./components/AdminComponents/AdminNavbar";
 
 function App() {
   return (
@@ -31,8 +32,6 @@ function App() {
               </>
             }
           />
-        </Route>
-
         {/*Book page*/}
         <Route
           path="/books"
@@ -84,14 +83,16 @@ function App() {
             </PrivateRoute>
           }
         />
-
+      </Route>
         {/* Admin route */}
+
+
         <Route element={<PrivateRoute />}>
           <Route
-            path="/adminhome"
+            path="/admin"
             element={
               <>
-                <Navbar />
+                <AdminNavbar />      
                 <AdminHome />
               </>
             }

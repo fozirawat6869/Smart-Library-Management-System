@@ -21,18 +21,13 @@ import { Navigate, Outlet } from "react-router-dom";
 const PrivateRoute = () => {
   const token = localStorage.getItem("token");
 
-  console.log("Token:", token);
-
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
   const decodedToken = jwtDecode(token);
 
-  console.log("Decoded Token:", decodedToken);
-  console.log("Role:", decodedToken.role);
-
-  if (decodedToken.role === "user") {
+  if (decodedToken.role === "student") {
     console.log("User Route");
     return <Outlet />;
   }
