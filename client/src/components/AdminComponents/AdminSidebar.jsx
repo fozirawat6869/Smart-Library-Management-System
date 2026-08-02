@@ -6,8 +6,8 @@ import {
   FolderTree,
   LogOut,
   X,
+  BookPlus,
 } from "lucide-react";
-
 
 const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const linkClasses = ({ isActive }) =>
@@ -16,11 +16,11 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
     }`;
 
   const Navigate = useNavigate();
-  
+
   const logout = () => {
     localStorage.removeItem("token");
     Navigate("/login");
-  }
+  };
 
   return (
     <>
@@ -36,19 +36,14 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       <aside
         className={`fixed md:static top-0 left-0 h-screen w-64 bg-gray-900 text-white z-50 transform transition-transform duration-300
         ${
-          sidebarOpen
-            ? "translate-x-0"
-            : "-translate-x-full md:translate-x-0"
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-6 border-b border-gray-700">
           <h1 className="text-2xl font-bold">Smart Library</h1>
 
-          <button
-            className="md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          >
+          <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
             <X size={24} />
           </button>
         </div>
@@ -91,12 +86,23 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <Users size={20} />
             Users
           </NavLink>
+
+          <NavLink
+            to="/admin/add-books"
+            className={linkClasses}
+            onClick={() => setSidebarOpen(false)}
+          >
+            <BookPlus size={20} />
+            Add Books
+          </NavLink>
         </nav>
 
         {/* Logout */}
-        <button className="absolute bottom-6 left-6 flex items-center gap-2 text-red-400 hover:text-red-500
-        transition" 
-        onClick={logout}>
+        <button
+          className="absolute bottom-6 left-6 flex items-center gap-2 text-red-400 hover:text-red-500
+        transition"
+          onClick={logout}
+        >
           <LogOut size={20} />
           Logout
         </button>
