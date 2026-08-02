@@ -13,7 +13,7 @@ import LearnMore from "./pages/LearnMore";
 import AdminHome from "./pages/adminPages/AdminHome";
 import AdminLayout from "./layouts/AdminLayout";
 import StudentLayout from "./layouts/StudentLayout";
-
+import AdminCategories from "./pages/adminPages/AdminCategories";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route element={<AdminLayout />}> 
             <Route path="/admin" element={<AdminHome />} />
-
+            <Route path="/admin/categories" element={<AdminCategories />} />
           </Route>
         </Route>
         
