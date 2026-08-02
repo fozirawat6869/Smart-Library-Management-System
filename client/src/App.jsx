@@ -14,29 +14,38 @@ import AdminHome from "./pages/adminPages/AdminHome";
 import AdminLayout from "./layouts/AdminLayout";
 import StudentLayout from "./layouts/StudentLayout";
 import AdminCategories from "./pages/adminPages/AdminCategories";
+import AddBooks from "./pages/adminPages/AddBooks";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-     
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-
-         {/* Admin route */}
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route element={<AdminLayout />}> 
+        {/* Admin route */}
+        {/* <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route element={<AdminLayout />}>
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/admin/categories" element={<AdminCategories />} />
+            <Route path="/admin/add-books" element={<AddBooks />} />
+          </Route>
+        </Route> */}
+
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminHome />} />
+            <Route path="categories" element={<AdminCategories />} />
+            <Route path="add-books" element={<AddBooks />} />
           </Route>
         </Route>
-        
 
         {/* Student routes */}
         <Route element={<PrivateRoute allowedRoles={["student"]} />}>
-          <Route element={<StudentLayout />}> // student layout is in components
+          <Route element={<StudentLayout />}>
+            {" "}
+            // student layout is in components
             <Route path="/home" element={<Home />} />
             <Route path="/books" element={<Books />} />
             <Route path="/books/:categoryId" element={<Books />} />
@@ -46,8 +55,6 @@ function App() {
             <Route path="/learn-more" element={<LearnMore />} />
           </Route>
         </Route>
-      
-       
       </Routes>
     </BrowserRouter>
   );
