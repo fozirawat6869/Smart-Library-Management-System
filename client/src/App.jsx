@@ -12,82 +12,33 @@ import BorrowCart from "./pages/BorrowCart";
 import LearnMore from "./pages/LearnMore";
 import AdminHome from "./pages/adminPages/AdminHome";
 import AdminNavbar from "./components/AdminComponents/AdminNavbar";
+import StudentLayout from "./components/Layouts/StudentLayout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* User routes */}
+     
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route
-            path="/home"
-            element={
-              <>
-                <Navbar />
-                <Home />
-              </>
-            }
-          />
-        {/*Book page*/}
-        <Route
-          path="/books"
-          element={
-            <>
-              <Navbar />
-              <Books />
-            </>
-          }
-        />
-
-        <Route path="/books/:categoryId" element={<Books />} />
-
-        <Route
-          path="/categories"
-          element={
-            <>
-              <Navbar />
-              <Category />
-            </>
-          }
-        />
-
-        <Route
-          path="/new-arrivals"
-          element={
-            <>
-              <Navbar />
-              <NewArrivals />
-            </>
-          }
-        />
-
-        <Route
-          path="/borrow-cart"
-          element={
-            <>
-              <Navbar />
-              <BorrowCart />
-            </>
-          }
-        />
-
-        <Route
-          path="/learn-more"
-          element={
-            <PrivateRoute>
-              <LearnMore />
-            </PrivateRoute>
-          }
-        />
-      </Route>
+        {/* Student routes */}
+        <Route element={<PrivateRoute allowedRoles={["student"]} />}>
+          <Route element={<StudentLayout />}> // student layout is in components
+            <Route path="/home" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/books/:categoryId" element={<Books />} />
+            <Route path="/categories" element={<Category />} />
+            <Route path="/new-arrivals" element={<NewArrivals />} />
+            <Route path="/borrow-cart" element={<BorrowCart />} />
+            <Route path="/learn-more" element={<LearnMore />} />
+          </Route>
+        </Route>
+        
+      
         {/* Admin route */}
-
-
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route
             path="/admin"
             element={
@@ -98,6 +49,7 @@ function App() {
             }
           />
         </Route>
+        
       </Routes>
     </BrowserRouter>
   );
