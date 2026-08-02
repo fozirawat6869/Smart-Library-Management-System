@@ -11,8 +11,9 @@ import NewArrivals from "./pages/NewArrivals";
 import BorrowCart from "./pages/BorrowCart";
 import LearnMore from "./pages/LearnMore";
 import AdminHome from "./pages/adminPages/AdminHome";
-import AdminNavbar from "./components/AdminComponents/AdminNavbar";
-import StudentLayout from "./components/Layouts/StudentLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import StudentLayout from "./layouts/StudentLayout";
+
 
 function App() {
   return (
@@ -22,6 +23,16 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+
+         {/* Admin route */}
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route element={<AdminLayout />}> 
+            <Route path="/admin" element={<AdminHome />} />
+
+          </Route>
+        </Route>
+        
 
         {/* Student routes */}
         <Route element={<PrivateRoute allowedRoles={["student"]} />}>
@@ -35,21 +46,8 @@ function App() {
             <Route path="/learn-more" element={<LearnMore />} />
           </Route>
         </Route>
-        
       
-        {/* Admin route */}
-        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-          <Route
-            path="/admin"
-            element={
-              <>
-                <AdminNavbar />      
-                <AdminHome />
-              </>
-            }
-          />
-        </Route>
-        
+       
       </Routes>
     </BrowserRouter>
   );

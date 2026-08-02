@@ -1,6 +1,5 @@
-
-import { jwtDecode } from "jwt-decode";
 import { Navigate, Outlet } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const PrivateRoute = ({ allowedRoles }) => {
   const token = localStorage.getItem("token");
@@ -9,22 +8,19 @@ const PrivateRoute = ({ allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  try{
-    const decodedToken = jwtDecode(token);
+  try {
+    const decoded = jwtDecode(token);
 
-    if(allowedRoles.includes(decodedToken.role)){
-      return <Outlet />;
+    if (!allowedRoles.includes(decoded.role)) {
+      return <Navigate to="/login" replace />;
     }
 
-    // unauthorized
-    alert("You are not authorized to access this page.");
-    return <Navigate to="/login" replace />;
-
-  }catch (error){
+    return <Outlet />;
+  } catch (err) {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     return <Navigate to="/login" replace />;
   }
-
 };
 
 export default PrivateRoute;
