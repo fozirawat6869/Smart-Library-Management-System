@@ -39,6 +39,21 @@ const AdminCategories = () => {
     }
   };
 
+  // delete category
+  const deleteCategory = async(id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this category?")
+
+    if(!confirmDelete) return;
+
+    try{
+      await API.delete(`/categories/${id}`);
+      alert("Category Deleted Successfully");
+      fetchCategories();
+    }catch(error){
+       alert(err.response?.data?.message || "Failed to delete category");
+    }
+  }
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -91,6 +106,13 @@ const AdminCategories = () => {
             <p className="text-gray-600 mt-2 text-sm">
               {category.description || "No description available"}
             </p>
+            
+            <button
+             onClick={() => deleteCategory(category._id)}
+             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 
+             mt-4 rounded">
+             Delete
+            </button>
           </div>
         ))}
       </div>

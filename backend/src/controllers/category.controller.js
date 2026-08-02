@@ -80,3 +80,46 @@ export const createCategory = async( req, res) => {
         message: error.message }); 
   }
 }
+
+export const deleteCategory = async (req, res) => {
+  try{
+    const { id } = req.params;
+
+    // check if category exists
+    const category = await Category.findById(id);
+    if(!category){
+      return res.status(404).json({
+        success: false,
+        message: "Category not found",
+      })
+    }
+
+    // delete category
+
+    const books = await Book.findOne({ category: id });
+
+    if(books){
+      return res.status(400).json({
+        success: false,
+        message: "Cannot delete category. Books are assigned to this category.",
+      })
+      alert("Cannot delete category. Books are assigned to this category.");
+    }
+
+    // delete categore
+
+    await Category.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Category deleted successfully",
+    })
+
+  }catch(error){
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+

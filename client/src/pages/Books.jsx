@@ -60,9 +60,7 @@ const filteredBooks = books.filter((book) => {
 
     return matchSearch && matchCategory;
   });
-
   
-
   return (
     <section className="bg-gray-50 min-h-screen py-10 px-4">
       <div className="max-w-7xl mx-auto">
@@ -93,22 +91,21 @@ const filteredBooks = books.filter((book) => {
 
  {/* Categories */}
 
-        <div className="flex gap-3 overflow-x-auto pb-3 mb-8 scrollbar-hide">
-        {categories.map((cat) => (
-          <button
-            key={cat._id}
-            onClick={() => setSelectedCategory(cat.name)}
-            className={`px-5 py-2 rounded-full ${
-              selectedCategory === cat.name
-                ? "bg-blue-600 text-white"
-                : "bg-white border"
-            }`}
-          >
-            {cat.name}
-          </button>
-        ))}
-        </div>
-
+<div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-3 mb-8 scrollbar-hide hide-scrollbar">
+  {categories.map((cat) => (
+    <button
+      key={cat._id}
+      onClick={() => setSelectedCategory(cat.name)}
+      className={`flex-shrink-0 px-5 py-2 rounded-full transition ${
+        selectedCategory === cat.name
+          ? "bg-blue-600 text-white"
+          : "bg-white border hover:bg-gray-100"
+      }`}
+    >
+      {cat.name}
+    </button>
+  ))}
+</div>
         {/* Books Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBooks.map((book) => (
