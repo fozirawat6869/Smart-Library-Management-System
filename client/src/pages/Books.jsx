@@ -1,7 +1,7 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, BookOpen } from "lucide-react";
 
-import {getBooks,  getCategories} from "../api/bookApi";
+import { getBooks, getCategories } from "../api/bookApi";
 import { useParams } from "react-router-dom";
 
 const categories = [
@@ -14,6 +14,8 @@ const categories = [
 ];
 
 const Books = () => {
+  const { categoryId } = useParams();
+
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -22,45 +24,43 @@ const Books = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  fetchData();
-}, []);
+    fetchData();
+  }, []);
 
-const fetchData = async () => {
-  try {
-    const [bookRes, categoryRes] = await Promise.all([
-      getBooks(),
-      getCategories(),
-    ]);
+  const fetchData = async () => {
+    try {
+      const [bookRes, categoryRes] = await Promise.all([
+        getBooks(),
+        getCategories(),
+      ]);
 
-    setBooks(bookRes.data.books);
+      setBooks(bookRes.data.books);
 
-    setCategories([
-      { _id: "all", name: "All" },
-      ...categoryRes.data.categories,
-    ]);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    setLoading(false);
-  }
-};
+      setCategories([
+        { _id: "all", name: "All" },
+        ...categoryRes.data.categories,
+      ]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const filteredBooks = books.filter((book) => {
-
-  const { categoryId } = useParams();
+  const filteredBooks = books.filter((book) => {
 
     const matchSearch =
       book.title.toLowerCase().includes(search.toLowerCase()) ||
       book.author.toLowerCase().includes(search.toLowerCase());
 
     const matchCategory = categoryId
-    ? book.category?._id === categoryId
-    : selectedCategory === "All" ||
+  ? book.category?._id === categoryId
+  : selectedCategory === "All" ||
     book.category?.name === selectedCategory;
 
     return matchSearch && matchCategory;
   });
-  
+
   return (
     <section className="bg-gray-50 min-h-screen py-10 px-4">
       <div className="max-w-7xl mx-auto">
@@ -75,10 +75,7 @@ const filteredBooks = books.filter((book) => {
 
         {/* Search */}
         <div className="relative max-w-xl mx-auto mb-6">
-          <Search
-            className="absolute left-4 top-3.5 text-gray-400"
-            size={20}
-          />
+          <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
 
           <input
             type="text"
@@ -89,23 +86,23 @@ const filteredBooks = books.filter((book) => {
           />
         </div>
 
- {/* Categories */}
+        {/* Categories */}
 
-<div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-3 mb-8 scrollbar-hide hide-scrollbar">
-  {categories.map((cat) => (
-    <button
-      key={cat._id}
-      onClick={() => setSelectedCategory(cat.name)}
-      className={`flex-shrink-0 px-5 py-2 rounded-full transition ${
-        selectedCategory === cat.name
-          ? "bg-blue-600 text-white"
-          : "bg-white border hover:bg-gray-100"
-      }`}
-    >
-      {cat.name}
-    </button>
-  ))}
-</div>
+        <div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-3 mb-8 scrollbar-hide hide-scrollbar">
+          {categories.map((cat) => (
+            <button
+              key={cat._id}
+              onClick={() => setSelectedCategory(cat.name)}
+              className={`flex-shrink-0 px-5 py-2 rounded-full transition ${
+                selectedCategory === cat.name
+                  ? "bg-blue-600 text-white"
+                  : "bg-white border hover:bg-gray-100"
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
         {/* Books Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBooks.map((book) => (
@@ -116,7 +113,10 @@ const filteredBooks = books.filter((book) => {
               <img
                 src={book.image}
                 alt={book.title}
-                className="w-full h-20 object-cover"
+                className="w-full h-56 object-cover"
+                onError={(e) => {
+                  e.target.src = "/placeholder-book.png";
+                }}
               />
 
               <div className="p-5">
@@ -124,19 +124,17 @@ const filteredBooks = books.filter((book) => {
                   {book.category?.name}
                 </span>
 
-                <h2 className="font-bold text-xl mt-3">
-                  {book.title}
-                </h2>
+                <h2 className="font-bold text-xl mt-3">{book.title}</h2>
 
                 <p className="text-gray-500 font-bold text-xs mt-1">
                   {book.author}
                 </p>
                 <div className="text-black-500 font-bold text-xs mt-1">
                   {`Quantity: ${book.quantity}`}
-                  </div>
+                </div>
                 <div className="text-black-500 font-bold text-xs mt-1">
                   {`isbn:${book.isbn}`}
-                  </div>
+                </div>
 
                 <div className="flex items-center justify-between mt-2">
                   {book.available ? (
@@ -144,9 +142,7 @@ const filteredBooks = books.filter((book) => {
                       Available
                     </span>
                   ) : (
-                    <span className="text-red-500 font-semibold">
-                      Issued
-                    </span>
+                    <span className="text-red-500 font-semibold">Issued</span>
                   )}
 
                   <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-lg">
@@ -160,9 +156,7 @@ const filteredBooks = books.filter((book) => {
 
         {filteredBooks.length === 0 && (
           <div className="text-center mt-16">
-            <h2 className="text-2xl font-semibold">
-              No Books Found 📚
-            </h2>
+            <h2 className="text-2xl font-semibold">No Books Found 📚</h2>
 
             <p className="text-gray-500 mt-2">
               Try another search or category.

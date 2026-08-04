@@ -25,10 +25,10 @@ export const createBooks = async (req, res) => {
       description,
       price,
       quantity,
-      image,
       isbn,
       category,
     } = req.body;
+
 
     // validate 
     if(!title || !author || !category){
@@ -44,7 +44,7 @@ export const createBooks = async (req, res) => {
       description,
       price,
       quantity,
-      image,
+      image: req.file.path,
       isbn,
       category,
     });
