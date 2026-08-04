@@ -29,8 +29,10 @@ app.use("/api/users", userRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/categories", categoryRoutes);
 
+app.use("/api/getAllUsers", getAllUsersRoutes);
 
 app.use("/api/getAllUsers", getAllUsersRoutes);
+
 app.use("/api/getAllUsers", getAllUsers);
 
 export default app;
