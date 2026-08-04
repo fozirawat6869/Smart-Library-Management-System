@@ -29,10 +29,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/categories", categoryRoutes);
 
-<<<<<<< HEAD
+
 app.use("/api/getAllUsers", getAllUsersRoutes);
-=======
 app.use("/api/getAllUsers", getAllUsers);
->>>>>>> feature/add-book
 
 export default app;
