@@ -15,6 +15,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import StudentLayout from "./layouts/StudentLayout";
 import AdminCategories from "./pages/adminPages/AdminCategories";
 import AddBooks from "./pages/adminPages/AddBooks";
+import AllUsers from "./pages/adminPages/AllUsers";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route index element={<AdminHome />} />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="add-books" element={<AddBooks />} />
+            <Route path="allUsers" element={<AllUsers />} />
           </Route>
         </Route>
 

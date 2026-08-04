@@ -7,9 +7,10 @@ import adminRoutes from "./src/routes/admin.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
+import { getAllUsers } from "./src/controllers/admin.controller.js";
 
 const app = express();
-app.use(cors())
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,11 +20,13 @@ app.get("/test", (req, res) => {
   res.send("Backend is working");
 });
 
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 
-app.use("/api/books", bookRoutes);  
+app.use("/api/books", bookRoutes);
 app.use("/api/categories", categoryRoutes);
+
+app.use("/api/getAllUsers", getAllUsers);
 
 export default app;

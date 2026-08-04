@@ -79,7 +79,7 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </NavLink>
 
           <NavLink
-            to="/admin/users"
+            to="/admin/allUsers"
             className={linkClasses}
             onClick={() => setSidebarOpen(false)}
           >
