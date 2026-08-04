@@ -7,6 +7,7 @@ import adminRoutes from "./src/routes/admin.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
+import { getAllUsers } from "./src/controllers/admin.controller.js";
 
 import getAllUsersRoutes from "./src/routes/getAllUsers.route.js";
 
@@ -28,6 +29,10 @@ app.use("/api/users", userRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/categories", categoryRoutes);
 
+<<<<<<< HEAD
 app.use("/api/getAllUsers", getAllUsersRoutes);
+=======
+app.use("/api/getAllUsers", getAllUsers);
+>>>>>>> feature/add-book
 
 export default app;

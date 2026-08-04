@@ -6,15 +6,13 @@ export const getAllUsers = async (req, res) => {
 
     const totalUsers = users.length;
     const totalStudents = users.filter(
-      (user) => user.role === "student"
+      (user) => user.role === "student",
     ).length;
 
-    const totalAdmins = users.filter(
-      (user) => user.role === "admin"
-    ).length;
+    const totalAdmins = users.filter((user) => user.role === "admin").length;
 
     const totalLibrarians = users.filter(
-      (user) => user.role === "librarian"
+      (user) => user.role === "librarian",
     ).length;
 
     res.status(200).json({
