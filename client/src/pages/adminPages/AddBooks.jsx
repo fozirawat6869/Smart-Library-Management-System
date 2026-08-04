@@ -113,11 +113,9 @@ function AddBooks() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto px-6 py-3">
       <div className="bg-white rounded-xl shadow-md p-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800">
-          Add New Book
-        </h2>
+        <h2 className="text-3xl font-bold mb-8 text-gray-800">Add New Book</h2>
 
         <form
           onSubmit={handleSubmit}
@@ -125,9 +123,7 @@ function AddBooks() {
         >
           {/* Title */}
           <div>
-            <label className="block mb-2 font-medium">
-              Book Title
-            </label>
+            <label className="block mb-2 font-medium">Book Title</label>
 
             <input
               type="text"
@@ -135,24 +131,18 @@ function AddBooks() {
               value={formData.title}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.title
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.title ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.title}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.title}</p>
             )}
           </div>
 
           {/* Author */}
           <div>
-            <label className="block mb-2 font-medium">
-              Author
-            </label>
+            <label className="block mb-2 font-medium">Author</label>
 
             <input
               type="text"
@@ -160,24 +150,18 @@ function AddBooks() {
               value={formData.author}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.author
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.author ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.author && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.author}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.author}</p>
             )}
           </div>
 
           {/* Price */}
           <div>
-            <label className="block mb-2 font-medium">
-              Price
-            </label>
+            <label className="block mb-2 font-medium">Price</label>
 
             <input
               type="number"
@@ -185,24 +169,18 @@ function AddBooks() {
               value={formData.price}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.price
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.price ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.price && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.price}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.price}</p>
             )}
           </div>
 
           {/* Quantity */}
           <div>
-            <label className="block mb-2 font-medium">
-              Quantity
-            </label>
+            <label className="block mb-2 font-medium">Quantity</label>
 
             <input
               type="number"
@@ -210,24 +188,18 @@ function AddBooks() {
               value={formData.quantity}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.quantity
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.quantity ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.quantity && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.quantity}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>
             )}
           </div>
 
           {/* ISBN */}
           <div>
-            <label className="block mb-2 font-medium">
-              ISBN
-            </label>
+            <label className="block mb-2 font-medium">ISBN</label>
 
             <input
               type="text"
@@ -235,59 +207,44 @@ function AddBooks() {
               value={formData.isbn}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.isbn
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.isbn ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.isbn && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.isbn}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.isbn}</p>
             )}
           </div>
 
-                    {/* Category */}
+          {/* Category */}
           <div>
-            <label className="block mb-2 font-medium">
-              Category
-            </label>
+            <label className="block mb-2 font-medium">Category</label>
 
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.category
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.category ? "border-red-500" : "border-gray-300"
               }`}
             >
               <option value="">Select Category</option>
 
               {categories.map((category) => (
-                <option
-                  key={category._id}
-                  value={category._id}
-                >
+                <option key={category._id} value={category._id}>
                   {category.name}
                 </option>
               ))}
             </select>
 
             {errors.category && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.category}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.category}</p>
             )}
           </div>
 
           {/* Image */}
           <div className="md:col-span-2">
-            <label className="block mb-2 font-medium">
-              Image URL
-            </label>
+            <label className="block mb-2 font-medium">Image URL</label>
 
             <input
               type="text"
@@ -295,24 +252,18 @@ function AddBooks() {
               value={formData.image}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border ${
-                errors.image
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.image ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.image && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.image}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.image}</p>
             )}
           </div>
 
           {/* Description */}
           <div className="md:col-span-2">
-            <label className="block mb-2 font-medium">
-              Description
-            </label>
+            <label className="block mb-2 font-medium">Description</label>
 
             <textarea
               rows="5"
@@ -320,16 +271,12 @@ function AddBooks() {
               value={formData.description}
               onChange={handleChange}
               className={`w-full rounded-lg px-4 py-2 border resize-none ${
-                errors.description
-                  ? "border-red-500"
-                  : "border-gray-300"
+                errors.description ? "border-red-500" : "border-gray-300"
               }`}
             />
 
             {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.description}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.description}</p>
             )}
           </div>
 
