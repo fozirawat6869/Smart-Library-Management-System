@@ -17,7 +17,7 @@ function AddBooks() {
     image: null,
     isbn: "",
     category: "",
-  });
+  }); 
 
   const [errors, setErrors] = useState({});
 
