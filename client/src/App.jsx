@@ -15,6 +15,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import StudentLayout from "./layouts/StudentLayout";
 import AdminCategories from "./pages/adminPages/AdminCategories";
 import AddBooks from "./pages/adminPages/AddBooks";
+import AllBooks from "./pages/adminPages/AllBooks";
 import AllUsers from "./pages/adminPages/AllUsers";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="categories" element={<AdminCategories />} />
             <Route path="add-books" element={<AddBooks />} />
             <Route path="allUsers" element={<AllUsers />} />
+            <Route path="allBooks" element={<AllBooks />} />
           </Route>
         </Route>
 

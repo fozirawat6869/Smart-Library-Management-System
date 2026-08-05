@@ -27,11 +27,13 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("/api/books", bookRoutes);
+
 app.use("/api/categories", categoryRoutes);
 
+// get all users in admin panel
 app.use("/api/getAllUsers", getAllUsersRoutes);
 
-app.use("/api/getAllUsers", getAllUsersRoutes);
+// app.use("/api/getAllUsers", getAllUsersRoutes);
 
 app.use("/api/getAllUsers", getAllUsers);
 

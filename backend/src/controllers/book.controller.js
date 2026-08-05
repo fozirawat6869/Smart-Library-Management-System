@@ -1,41 +1,35 @@
 import Book from "../models/Book.model.js";
 
 export const getBooks = async (req, res) => {
-  try{
-    const books = await Book.find().populate("category"); 
+  try {
+    const books = await Book.find().populate("category");
 
     res.json({
       success: true,
       books,
-    })
-  }
-  catch(error){
-    res.status(500)
-    .json({ 
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: error.message });
+      message: error.message,
+    });
   }
-}
+};
 
 export const createBooks = async (req, res) => {
-  try{
-    const {
-      title,
-      author,
-      description,
-      price,
-      quantity,
-      isbn,
-      category,
-    } = req.body;
+  console.log("images is there : ", req.file);
+  console.log("body is there : ", req.body);
 
+  try {
+    const { title, author, description, price, quantity, isbn, category } =
+      req.body;
 
-    // validate 
-    if(!title || !author || !category){
+    // validate
+    if (!title || !author || !category) {
       return res.status(400).json({
         success: false,
         message: "Tittle, author, category are required",
-      })
+      });
     }
 
     const book = await Book.create({
@@ -52,14 +46,14 @@ export const createBooks = async (req, res) => {
     res.status(201).json({
       success: true,
       book,
-    })
-    }catch(error){
-    res.status(500)
-    .json({ 
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: error.message });
+      message: error.message,
+    });
   }
-}
+};
 
 export const getNewArrivals = async (req, res) => {
   try {

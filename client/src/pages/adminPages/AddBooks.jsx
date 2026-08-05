@@ -17,7 +17,7 @@ function AddBooks() {
     image: null,
     isbn: "",
     category: "",
-  }); 
+  });
 
   const [errors, setErrors] = useState({});
 
@@ -125,7 +125,9 @@ function AddBooks() {
       });
 
       setPreview(""); // Clear the image preview
-      fileInputRef.current.value = ""; // deletes the file input value image
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      } // deletes the file input value image
       setErrors({});
     } catch (error) {
       console.log(error);

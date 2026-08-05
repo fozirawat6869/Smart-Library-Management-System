@@ -61,12 +61,12 @@ const AdminSidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </NavLink>
 
           <NavLink
-            to="/admin/books"
+            to="/admin/allBooks"
             className={linkClasses}
             onClick={() => setSidebarOpen(false)}
           >
             <BookOpen size={20} />
-            Books
+            AllBooks
           </NavLink>
 
           <NavLink
