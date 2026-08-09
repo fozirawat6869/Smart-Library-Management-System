@@ -48,18 +48,33 @@ const Books = () => {
   };
 
   const filteredBooks = books.filter((book) => {
-
     const matchSearch =
       book.title.toLowerCase().includes(search.toLowerCase()) ||
       book.author.toLowerCase().includes(search.toLowerCase());
 
     const matchCategory = categoryId
-  ? book.category?._id === categoryId
-  : selectedCategory === "All" ||
-    book.category?.name === selectedCategory;
+      ? book.category?._id === categoryId
+      : selectedCategory === "All" || book.category?.name === selectedCategory;
 
     return matchSearch && matchCategory;
   });
+
+  const addToCart = (book) => {
+    // Implement the logic to add the book to the cart
+    const existingCart = JSON.parse(localStorage.getItem("borrowCart")) || [];
+
+    const alreadyAdded = existingCart.some((item) => item._id === book._id);
+
+    if (alreadyAdded) {
+      alert("Book already in cart");
+      return;
+    }
+
+    const updatedCart = [...existingCart, book];
+    localStorage.setItem("borrowCart", JSON.stringify(updatedCart));
+
+    alert("Book added to cart");
+  };
 
   return (
     <section className="bg-gray-50 min-h-screen py-10 px-4">
@@ -145,8 +160,11 @@ const Books = () => {
                     <span className="text-red-500 font-semibold">Issued</span>
                   )}
 
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-lg">
-                    View
+                  <button
+                    onClick={() => addToCart(book)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                  >
+                    Add to Borrow Cart
                   </button>
                 </div>
               </div>
