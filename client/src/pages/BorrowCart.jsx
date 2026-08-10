@@ -65,7 +65,7 @@ const BorrowCart = () => {
                   className="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row gap-4 hover:shadow-xl transition"
                 >
 
-                  {/* Book Image */}
+                  {/* Book Image */}  
 
                   <img
                     src={book.image}

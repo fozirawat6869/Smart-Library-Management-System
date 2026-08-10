@@ -1,3 +1,16 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Toast */
+.toast-custom {
+  width: 400px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .toast-custom {
+    width: calc(100vw - 32px);
+    max-width: none;
+  }
+}

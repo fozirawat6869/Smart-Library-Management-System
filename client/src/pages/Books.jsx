@@ -1,31 +1,41 @@
-import { useEffect, useState } from "react";
+
+import { useEffect,useState } from "react";
 import { Search, BookOpen } from "lucide-react";
-
+import { useSearchParams, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getBooks, getCategories } from "../api/bookApi";
-import { useParams } from "react-router-dom";
-
-const categories = [
-  "All",
-  "Programming",
-  "Self Help",
-  "Productivity",
-  "Finance",
-  "Novel",
-];
 
 const Books = () => {
-  const { categoryId } = useParams();
-
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Get category from URL
+  const categoryFromURL = searchParams.get("category");
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryFromURL || "all"
+  );
+
+  const location = useLocation();
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+  if (location.state?.message) {
+    toast.success(location.state.message);
+  }
+}, [location.state]);
+
+  // Keep selected category synchronized with URL
+  useEffect(() => {
+    setSelectedCategory(categoryFromURL || "all");
+  }, [categoryFromURL]);
 
   const fetchData = async () => {
     try {
@@ -34,156 +44,179 @@ const Books = () => {
         getCategories(),
       ]);
 
-      setBooks(bookRes.data.books);
+      setBooks(bookRes.data.books || []);
 
       setCategories([
-        { _id: "all", name: "All" },
-        ...categoryRes.data.categories,
+        {
+          _id: "all",
+          name: "All",
+        },
+        ...(categoryRes.data.categories || []),
       ]);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching books:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredBooks = books.filter((book) => {
-    const matchSearch =
-      book.title.toLowerCase().includes(search.toLowerCase()) ||
-      book.author.toLowerCase().includes(search.toLowerCase());
+  // Change category
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
 
-    const matchCategory = categoryId
-      ? book.category?._id === categoryId
-      : selectedCategory === "All" || book.category?.name === selectedCategory;
-
-    return matchSearch && matchCategory;
-  });
-
-  const addToCart = (book) => {
-    // Implement the logic to add the book to the cart
-    const existingCart = JSON.parse(localStorage.getItem("borrowCart")) || [];
-
-    const alreadyAdded = existingCart.some((item) => item._id === book._id);
-
-    if (alreadyAdded) {
-      alert("Book already in cart");
-      return;
+    if (categoryId === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({
+        category: categoryId,
+      });
     }
-
-    const updatedCart = [...existingCart, book];
-    localStorage.setItem("borrowCart", JSON.stringify(updatedCart));
-
-    alert("Book added to cart");
   };
 
+  // Filter books
+  const filteredBooks = books.filter((book) => {
+    const matchesSearch =
+      book.title?.toLowerCase().includes(search.toLowerCase()) ||
+      book.author?.toLowerCase().includes(search.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "all" ||
+      book.category?._id === selectedCategory ||
+      book.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading books...</p>
+      </div>
+    );
+  }
+
   return (
-    <section className="bg-gray-50 min-h-screen py-10 px-4">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+
+      {/* Header */}
       <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <div className="text-center mb-8">
-          <BookOpen className="mx-auto text-blue-600" size={45} />
-          <h1 className="text-4xl font-bold mt-3">Library Books</h1>
-          <p className="text-gray-600 mt-2">
-            Browse and discover your next favorite book.
+
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Explore Books
+          </h1>
+
+          <p className="mt-2 text-gray-600">
+            Find your favorite books and start reading.
           </p>
         </div>
 
         {/* Search */}
-        <div className="relative max-w-xl mx-auto mb-6">
-          <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
-
+        <div className="flex bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden max-w-lg mb-6">
           <input
             type="text"
             placeholder="Search books or authors..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full border rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="flex-1 px-4 py-3 outline-none"
           />
+
+          <button className="bg-blue-600 text-white px-5">
+            <Search size={21} />
+          </button>
         </div>
 
         {/* Categories */}
-
-        <div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-3 mb-8 scrollbar-hide hide-scrollbar">
-          {categories.map((cat) => (
+        <div className="flex gap-3 overflow-x-auto pb-4 mb-8">
+          {categories.map((category) => (
             <button
-              key={cat._id}
-              onClick={() => setSelectedCategory(cat.name)}
-              className={`flex-shrink-0 px-5 py-2 rounded-full transition ${
-                selectedCategory === cat.name
+              key={category._id}
+              onClick={() => handleCategoryChange(category._id)}
+              className={`px-5 py-2 rounded-full whitespace-nowrap font-medium transition ${
+                selectedCategory === category._id
                   ? "bg-blue-600 text-white"
-                  : "bg-white border hover:bg-gray-100"
+                  : "bg-white text-gray-700 border border-gray-200 hover:bg-blue-50"
               }`}
             >
-              {cat.name}
+              {category.name}
             </button>
           ))}
         </div>
-        {/* Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredBooks.map((book) => (
-            <div
-              key={book._id}
-              className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition duration-300"
-            >
-              <img
-                src={book.image}
-                alt={book.title}
-                className="w-full h-56 object-cover"
-                onError={(e) => {
-                  e.target.src = "/placeholder-book.png";
-                }}
-              />
 
-              <div className="p-5">
-                <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                  {book.category?.name}
-                </span>
+        {/* Books */}
+        {filteredBooks.length === 0 ? (
+          <div className="text-center py-20">
+            <BookOpen
+              size={50}
+              className="mx-auto text-gray-400 mb-4"
+            />
 
-                <h2 className="font-bold text-xl mt-3">{book.title}</h2>
-
-                <p className="text-gray-500 font-bold text-xs mt-1">
-                  {book.author}
-                </p>
-                <div className="text-black-500 font-bold text-xs mt-1">
-                  {`Quantity: ${book.quantity}`}
-                </div>
-                <div className="text-black-500 font-bold text-xs mt-1">
-                  {`isbn:${book.isbn}`}
-                </div>
-
-                <div className="flex items-center justify-between mt-2">
-                  {book.available ? (
-                    <span className="text-green-600 font-semibold">
-                      Available
-                    </span>
-                  ) : (
-                    <span className="text-red-500 font-semibold">Issued</span>
-                  )}
-
-                  <button
-                    onClick={() => addToCart(book)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Add to Borrow Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredBooks.length === 0 && (
-          <div className="text-center mt-16">
-            <h2 className="text-2xl font-semibold">No Books Found 📚</h2>
+            <h2 className="text-xl font-semibold text-gray-700">
+              No books found
+            </h2>
 
             <p className="text-gray-500 mt-2">
               Try another search or category.
             </p>
           </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+            {filteredBooks.map((book) => (
+              <Link
+                key={book._id}
+                to={`/books/${book._id}`}
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition group"
+              >
+
+                {/* Image */}
+                <div className="h-64 bg-gray-100 overflow-hidden">
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+
+                  <h2 className="font-bold text-lg text-gray-900 line-clamp-1">
+                    {book.title}
+                  </h2>
+
+                  <p className="text-gray-500 text-sm mt-1">
+                    {book.author}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-4">
+
+                    <span className="text-blue-600 font-semibold">
+                      {book.category?.name || "Unknown"}
+                    </span>
+
+                    <span
+                      className={`text-xs px-3 py-1 rounded-full ${
+                        book.available
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {book.available ? "Available" : "Unavailable"}
+                    </span>
+
+                  </div>
+
+                </div>
+              </Link>
+            ))}
+
+          </div>
         )}
       </div>
-    </section>
+    </div>
   );
 };
 
 export default Books;
+

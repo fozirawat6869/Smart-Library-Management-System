@@ -2,7 +2,7 @@ import Book from "../models/Book.model.js";
 
 export const getBooks = async (req, res) => {
   try {
-    const books = await Book.find().populate("category");
+    const books = await Book.find().populate("category", "name");
 
     res.json({
       success: true,
