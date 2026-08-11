@@ -140,7 +140,7 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 
 ## 📌 Learning Outcomes
 
-This project demonstrates practical experience in:
+This project demonstrates practical experience in:-
 
 * Full-Stack MERN Development
 * RESTful API Development
