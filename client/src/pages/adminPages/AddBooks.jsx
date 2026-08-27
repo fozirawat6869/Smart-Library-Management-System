@@ -136,7 +136,7 @@ function AddBooks() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 py-10 px-4">
+    <div className=" bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 py-0 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white">
           <h2 className="text-3xl md:text-4xl font-bold">📚 Add New Book</h2>
