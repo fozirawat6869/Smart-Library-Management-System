@@ -107,7 +107,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 ### Tools
 
 * Git & GitHub
-* Postman
 * Vercel (Frontend Deployment)
 * Render / Railway (Backend Deployment)
 
