@@ -90,7 +90,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Tailwind CSS
 * React Router
 * Axios
-* Context API / Redux Toolkit
 
 ### Backend
 
