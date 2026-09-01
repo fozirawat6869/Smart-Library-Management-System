@@ -37,7 +37,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Return Books
 * Renew Borrowed Books
 * Book Reservation & Waiting List
-* Automatic Stock Updates
 
 ### 💰 Fine Management
 
