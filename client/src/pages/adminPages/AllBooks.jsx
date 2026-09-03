@@ -60,7 +60,7 @@ const AllBooks = () => {
   }
 
   return (
-    <div className=" bg-slate-100 p-6">
+    <div className=" bg-slate-100 px-6">
       {/* Header */}
 
       <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
