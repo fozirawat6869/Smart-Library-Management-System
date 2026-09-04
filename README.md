@@ -117,7 +117,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Reduce manual record-keeping.
 * Provide secure user authentication and authorization.
 * Deliver a responsive and modern user experience.
-* Generate real-time reports and analytics for administrators.
 
 ---
 
