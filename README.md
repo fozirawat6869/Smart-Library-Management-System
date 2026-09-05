@@ -60,7 +60,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Search by Title
 * Search by Author
 * Search by Category
-* Search by ISBN
 * Advanced Filtering & Sorting
 
 ### 📧 Notifications
