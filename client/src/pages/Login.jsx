@@ -6,6 +6,8 @@ import { BookOpen, Eye, EyeOff, Mail, Lock } from "lucide-react";
 const Login = () => {
   const navigate = useNavigate();
 
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
 
   // student or admin
@@ -25,6 +27,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setButtonDisabled(true);
 
     try {
       const response = await API.post("/auth/login", {
@@ -44,6 +47,8 @@ const Login = () => {
       }
     } catch (error) {
       alert(error.response?.data?.message || "Login Failed");
+    } finally {
+      setButtonDisabled(false);
     }
   };
 
@@ -161,8 +166,13 @@ const Login = () => {
               </button>
             </div>
 
-            <button className="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-3 rounded-lg font-semibold">
-              Login as {loginType === "student" ? "Student" : "Admin"}
+            <button
+              disabled={buttonDisabled}
+              className="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-3 rounded-lg font-semibold"
+            >
+              {buttonDisabled
+                ? "Logging in..."
+                : `Login as ${loginType === "student" ? "Student" : "Admin"}`}
             </button>
           </form>
 
