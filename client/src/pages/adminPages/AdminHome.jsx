@@ -37,7 +37,7 @@ const AdminHome = () => {
 
       const availableBooks = books.reduce(
         (sum, book) => sum + Number(book.quantity || 0),
-        0
+        0,
       );
 
       setStats({
@@ -115,9 +115,7 @@ const AdminHome = () => {
                 <div>
                   <p className="text-gray-500">{item.title}</p>
 
-                  <h2 className="text-3xl font-bold mt-2">
-                    {item.value}
-                  </h2>
+                  <h2 className="text-3xl font-bold mt-2">{item.value}</h2>
                 </div>
 
                 <div className={`${item.color} p-4 rounded-xl text-white`}>
@@ -134,9 +132,7 @@ const AdminHome = () => {
         {/* Recent Books */}
         <div className="xl:col-span-2 bg-white rounded-2xl shadow-md p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold">
-              📚 Latest Added Books
-            </h2>
+            <h2 className="text-xl font-bold">📚 Latest Added Books</h2>
 
             <button className="text-blue-600 flex items-center gap-1 hover:text-blue-700">
               View All
@@ -151,13 +147,9 @@ const AdminHome = () => {
                 className="flex items-center justify-between border rounded-xl p-4 hover:bg-slate-50 transition"
               >
                 <div>
-                  <h3 className="font-semibold text-lg">
-                    {book.title}
-                  </h3>
+                  <h3 className="font-semibold text-lg">{book.title}</h3>
 
-                  <p className="text-gray-500">
-                    {book.author}
-                  </p>
+                  <p className="text-gray-500">{book.author}</p>
                   <p className="text-Black-500">
                     {"Available " + book.available}
                   </p>
@@ -173,9 +165,7 @@ const AdminHome = () => {
 
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl shadow-md p-6">
-          <h2 className="text-xl font-bold mb-6">
-            ⚡ Quick Actions
-          </h2>
+          <h2 className="text-xl font-bold mb-6">⚡ Quick Actions</h2>
 
           <div className="space-y-4">
             <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-medium">
