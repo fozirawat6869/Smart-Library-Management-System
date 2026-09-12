@@ -52,7 +52,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Registered Members
 * Fine Collection Statistics
 * Monthly Borrowing Reports
-* Interactive Charts & Graphs
 
 ### 🔍 Smart Search
 
