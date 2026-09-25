@@ -21,7 +21,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Book Categories & Authors
 * ISBN Validation
 * Book Cover Image Upload (Cloudinary)
-* QR Code / Barcode Support
 * Real-time Book Availability
 
 ### 👨‍🎓 Member Management
