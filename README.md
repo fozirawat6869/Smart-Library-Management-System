@@ -19,7 +19,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 
 * Add, Update, Delete Books
 * Book Categories & Authors
-* ISBN Validation
 * Book Cover Image Upload (Cloudinary)
 * Real-time Book Availability
 
