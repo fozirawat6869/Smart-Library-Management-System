@@ -48,7 +48,6 @@ Administrators can efficiently manage books, users, categories, inventory, and l
 * Issued Books
 * Overdue Books
 * Registered Members
-* Monthly Borrowing Reports
 
 ### 🔍 Smart Search
 
